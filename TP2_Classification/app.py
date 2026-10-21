@@ -141,7 +141,7 @@ with tab2:
             cm = np.array([[75, 5], [4, 14]])
         st.info("ℹ️ Affichage basé sur les métriques du modèle sélectionné.")
 
-    fig, ax = plt.subplots(figsize=(3, 1.5))
+    fig, ax = plt.subplots(figsize=(2, 0.5))
     annot_labels = np.array([
         [f"{cm[0,0]}\nVN", f"{cm[0,1]}\nFP"],
         [f"{cm[1,0]}\nFN", f"{cm[1,1]}\nVP"]
@@ -149,9 +149,9 @@ with tab2:
     
     sns.heatmap(cm, annot=annot_labels, fmt="", cmap="Blues", cbar=True,
                 xticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"],
-                yticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"], ax=ax, annot_kws={"size": 13, "weight": "bold"})
+                yticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"], ax=ax, annot_kws={"size": 8, "weight": "bold"})
     
-    ax.set_xlabel("Classe prédite", fontsize=11)
-    ax.set_ylabel("Classe réelle", fontsize=11)
-    ax.set_title(f"Matrice de confusion - {cm_model_name}", fontsize=13, fontweight="bold")
+    ax.set_xlabel("Classe prédite", fontsize=5)
+    ax.set_ylabel("Classe réelle", fontsize=5)
+    ax.set_title(f"Matrice de confusion - {cm_model_name}", fontsize=8, fontweight="bold")
     st.pyplot(fig)
