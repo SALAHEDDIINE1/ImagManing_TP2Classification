@@ -9,7 +9,7 @@ from PIL import Image
 from features import extract_features, SIZE
 
 # Configuration de la page
-st.set_page_config(page_title="Classification DB2C", page_icon="", layout="wide")
+st.set_page_config(page_title="ImagManing_TP2Classification", layout="wide")
 
 # CSS Moderne
 st.markdown("""
