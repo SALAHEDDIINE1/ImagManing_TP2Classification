@@ -36,7 +36,6 @@ st.markdown("""
 
 @st.cache_resource
 def load_all():
-    # Détermine le chemin vers le dossier où se trouve app.py
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
     metrics_path = os.path.join(base_dir, "models", "metrics.json")
