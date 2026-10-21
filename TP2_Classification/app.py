@@ -76,7 +76,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Barre latérale (Paramètres)
-st.sidebar.image("https://cdn-icons-png.flaticon.com/512/2083/2083213.png", width=60)
+
 st.sidebar.title("Configuration")
 algo = st.sidebar.selectbox("🧠 Choisir l'algorithme", list(models.keys()), index=0)
 st.sidebar.markdown("---")
