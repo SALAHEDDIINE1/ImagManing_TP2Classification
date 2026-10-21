@@ -9,12 +9,14 @@ from PIL import Image
 from features import extract_features, SIZE
 
 # Configuration de la page
-st.set_page_config(page_title="Classification DB2C", page_icon="🔮", layout="wide")
+st.set_page_config(page_title="Classification DB2C", page_icon="", layout="wide")
 
 # CSS Moderne
 st.markdown("""
 <style>
-    #MainMenu, footer {visibility: hidden;}
+    /* Masquer le menu, le footer et le header (boutons de partage/GitHub) */
+    #MainMenu, footer, header {visibility: hidden;}
+    
     .block-container {padding-top: 2rem; max-width: 1100px;}
     
     /* Bannière Hero */
@@ -122,10 +124,6 @@ with tab1:
             with st.expander("👁️ Voir l'avis des 5 autres modèles"):
                 rows = [{"Algorithme": n, "Verdict": CLASSES[int(m.predict(feats)[0])]} for n, m in models.items()]
                 st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
-
-        with st.expander("⚙️ Examiner le vecteur de caractéristiques brut"):
-            st.caption(f"Le modèle a analysé {feats.shape[1]} variables mathématiques extraites de cette image.")
-            st.dataframe(pd.DataFrame(feats), use_container_width=True)
 
 with tab2:
     st.markdown("### Résumé de l'entraînement")
