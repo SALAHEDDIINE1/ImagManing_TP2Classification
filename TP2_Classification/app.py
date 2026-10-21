@@ -11,7 +11,8 @@ st.set_page_config(page_title="Voiture ou Bateau ?", page_icon="🖼️", layout
 
 st.markdown("""
 <style>
-#MainMenu, footer {visibility: hidden;}
+/* Ajout de 'header' pour masquer la barre supérieure de Streamlit */
+#MainMenu, footer, header {visibility: hidden;}
 .block-container {padding-top: 2rem; max-width: 1100px;}
 .hero {
   background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
@@ -30,7 +31,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Correction du chemin d'accès aux modèles
 @st.cache_resource
 def load_all():
     base_dir = os.path.dirname(os.path.abspath(__file__))
