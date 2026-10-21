@@ -1,7 +1,4 @@
-"""À lancer UNE FOIS en local :  python train.py
-Lit le dataset DB2C (dossiers obj_car et obj_ship), entraîne les 6 modèles
-et sauvegarde tout dans le dossier models/ (modèles .joblib + metrics.json).
-"""
+
 import os, sys, json
 import numpy as np
 import cv2
