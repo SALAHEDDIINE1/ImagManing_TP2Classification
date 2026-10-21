@@ -149,9 +149,9 @@ with tab2:
     
     sns.heatmap(cm, annot=annot_labels, fmt="", cmap="Blues", cbar=True,
                 xticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"],
-                yticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"], ax=ax, annot_kws={"size": 8, "weight": "bold"})
+                yticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"], ax=ax, annot_kws={"size": 13, "weight": "bold"})
     
-    ax.set_xlabel("Classe prédite", fontsize=5)
-    ax.set_ylabel("Classe réelle", fontsize=5)
-    ax.set_title(f"Matrice de confusion - {cm_model_name}", fontsize=8, fontweight="bold")
+    ax.set_xlabel("Classe prédite", fontsize=11)
+    ax.set_ylabel("Classe réelle", fontsize=11)
+    ax.set_title(f"Matrice de confusion - {cm_model_name}", fontsize=13, fontweight="bold")
     st.pyplot(fig)
