@@ -32,7 +32,7 @@ st.markdown("""
 
 @st.cache_resource
 def load_all():
-    metrics = json.load(open("models/metrics.json", encoding="utf-8"))
+    metrics = json.load(open("TP2_Classification/models/metrics.json", encoding="utf-8"))
     models = {name: joblib.load(f"models/{key}.joblib")
               for key, name in metrics["names"].items()}
     return models, metrics
