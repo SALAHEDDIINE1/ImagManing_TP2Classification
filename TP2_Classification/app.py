@@ -35,8 +35,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-
 @st.cache_resource
 def load_all():
     # Détermine le chemin vers le dossier où se trouve app.py
@@ -46,15 +44,17 @@ def load_all():
     metrics = json.load(open(metrics_path, encoding="utf-8"))
     
     models = {}
-    for key, name in metrics["names"].items():
+    for key, name in metrics.get("names", {}).items():
         model_path = os.path.join(base_dir, "models", f"{key}.joblib")
         models[name] = joblib.load(model_path)
         
     return models, metrics
 
+models, metrics = load_all()
+# Utiliser le SVM RBF par défaut pour la prédiction
+model = models.get("SVM (RBF)") if "SVM (RBF)" in models else list(models.values())[0]
 
-model, metrics = load_all()
-CLASSES = metrics["classes"]
+CLASSES = metrics.get("classes", ["Oiseau", "Camion"])
 EMOJI = {"Oiseau": "🐦", "Camion": "🚚"}
 
 st.markdown("""
@@ -91,11 +91,11 @@ with tab1:
             css = "bird" if idx == 0 else "truck"
             st.markdown(
                 f'<div class="result {css}">Classe prédite'
-                f'<b>{EMOJI[label]} {label}</b>Confiance : {proba[idx]*100:.1f} %</div>',
+                f'<b>{EMOJI.get(label, "❓")} {label}</b>Confiance : {proba[idx]*100:.1f} %</div>',
                 unsafe_allow_html=True)
             st.write("")
             for i, name in enumerate(CLASSES):
-                st.write(f"{EMOJI[name]} {name}")
+                st.write(f"{EMOJI.get(name, '❓')} {name}")
                 st.progress(float(proba[i]), text=f"{proba[i]*100:.1f} %")
             with st.expander("Voir le vecteur de caractéristiques"):
                 st.write(f"Dimension : {feats.shape[1]} caractéristiques")
@@ -104,27 +104,40 @@ with tab1:
 # ---------- Onglet 2 : résultats ----------
 with tab2:
     a, b, c = st.columns(3)
-    a.metric("Images d'entraînement", metrics["n_train"])
-    b.metric("Images de test", metrics["n_test"])
-    c.metric("Caractéristiques / image", metrics["n_features"])
+    a.metric("Images d'entraînement", metrics.get("n_train", 0))
+    b.metric("Images de test", metrics.get("n_test", 0))
+    c.metric("Caractéristiques / image", metrics.get("n_features", 0))
 
     st.markdown("### Comparaison des algorithmes (accuracy)")
-    df = pd.DataFrame({"Modèle": list(metrics["accuracies"].keys()),
-                       "Accuracy": list(metrics["accuracies"].values())})
-    l, r = st.columns([1, 1.3])
-    l.dataframe(df.sort_values("Accuracy", ascending=False),
-                hide_index=True, use_container_width=True)
-    r.bar_chart(df.set_index("Modèle"))
+    # On utilise .get() avec un dictionnaire vide par défaut pour éviter le KeyError
+    accuracies = metrics.get("accuracies", {})
+    if accuracies:
+        df = pd.DataFrame({"Modèle": list(accuracies.keys()),
+                           "Accuracy": list(accuracies.values())})
+        l, r = st.columns([1, 1.3])
+        l.dataframe(df.sort_values("Accuracy", ascending=False),
+                    hide_index=True, use_container_width=True)
+        r.bar_chart(df.set_index("Modèle"))
+    else:
+        st.warning("Les données 'accuracies' sont absentes du fichier metrics.json.")
 
     st.markdown("### Matrice de confusion (SVM RBF)")
-    cm = pd.DataFrame(metrics["confusion_matrix"],
-                      index=[f"Vrai {c}" for c in CLASSES],
-                      columns=[f"Prédit {c}" for c in CLASSES])
-    st.dataframe(cm, use_container_width=True)
+    cm_data = metrics.get("confusion_matrix")
+    if cm_data:
+        cm = pd.DataFrame(cm_data,
+                          index=[f"Vrai {c}" for c in CLASSES],
+                          columns=[f"Prédit {c}" for c in CLASSES])
+        st.dataframe(cm, use_container_width=True)
+    else:
+        st.warning("Matrice de confusion absente du fichier metrics.json.")
 
     st.markdown("### Rapport de classification")
-    rep = pd.DataFrame(metrics["report"]).T.round(3)
-    st.dataframe(rep, use_container_width=True)
+    report_data = metrics.get("report")
+    if report_data:
+        rep = pd.DataFrame(report_data).T.round(3)
+        st.dataframe(rep, use_container_width=True)
+    else:
+        st.warning("Rapport de classification absent du fichier metrics.json.")
 
 # ---------- Onglet 3 ----------
 with tab3:
