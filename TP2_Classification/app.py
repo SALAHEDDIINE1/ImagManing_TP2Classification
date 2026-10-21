@@ -141,7 +141,7 @@ with tab2:
             cm = np.array([[75, 5], [4, 14]])
         st.info("ℹ️ Affichage basé sur les métriques du modèle sélectionné.")
 
-    fig, ax = plt.subplots(figsize=(6, 4.5))
+    fig, ax = plt.subplots(figsize=(3, 1.5))
     annot_labels = np.array([
         [f"{cm[0,0]}\nVN", f"{cm[0,1]}\nFP"],
         [f"{cm[1,0]}\nFN", f"{cm[1,1]}\nVP"]
