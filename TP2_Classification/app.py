@@ -125,7 +125,6 @@ with tab2:
     
     cm_model_name = st.selectbox("Sélectionner un modèle pour afficher sa matrice de confusion", list(models.keys()), key="cm_select")
     
-    # Vérification si un fichier de données de test existe, sinon utilisation de valeurs de référence (ex: SVM RBF)
     base_dir = os.path.dirname(os.path.abspath(__file__))
     test_data_path = os.path.join(base_dir, "models", "test_data.joblib")
     
@@ -134,15 +133,13 @@ with tab2:
         y_pred = models[cm_model_name].predict(X_test)
         cm = confusion_matrix(y_test, y_pred)
     else:
-        # Valeurs basées sur votre rapport (notamment SVM RBF) si les données brutes de test ne sont pas chargées
         if "SVM" in cm_model_name:
             cm = np.array([[79, 1], [9, 9]])
         else:
             cm = np.array([[75, 5], [4, 14]])
         st.info("ℹ️ Affichage basé sur les métriques du modèle sélectionné.")
 
-   # 7na sgharna figsize w zedna use_container_width=False
-    fig, ax = plt.subplots(figsize=(4, 3))
+      fig, ax = plt.subplots(figsize=(4, 3))
     
     annot_labels = np.array([
         [f"{cm[0,0]}\nVN", f"{cm[0,1]}\nFP"],
@@ -160,7 +157,6 @@ with tab2:
     
     plt.tight_layout()
     
-    # N-7tiwha f wast column sghira bach tban sghira w m9ada f screenshot
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.pyplot(fig, use_container_width=False)
