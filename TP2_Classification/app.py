@@ -1,4 +1,5 @@
 import json
+import os
 import numpy as np
 import pandas as pd
 import joblib
@@ -35,11 +36,21 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+
 @st.cache_resource
 def load_all():
-    model = joblib.load("model.joblib")
-    metrics = json.load(open("metrics.json", encoding="utf-8"))
-    return model, metrics
+    # Détermine le chemin vers le dossier où se trouve app.py
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    metrics_path = os.path.join(base_dir, "models", "metrics.json")
+    metrics = json.load(open(metrics_path, encoding="utf-8"))
+    
+    models = {}
+    for key, name in metrics["names"].items():
+        model_path = os.path.join(base_dir, "models", f"{key}.joblib")
+        models[name] = joblib.load(model_path)
+        
+    return models, metrics
 
 
 model, metrics = load_all()
