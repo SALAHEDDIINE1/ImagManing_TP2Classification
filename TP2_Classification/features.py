@@ -1,7 +1,6 @@
-"""Extraction de caractéristiques : mêmes descripteurs que le TP1 (CBIR) + LBP.
+"""Extraction de caractéristiques : mêmes descripteurs de TP1 ( + LBP.
    Couleur RGB (6) + Histogramme HSV (32) + Texture GLCM (4) + Forme Hu (7) + LBP (10) = 59
-Si votre TP1 utilise des détails différents (normalisation, Hu...), collez vos fonctions ici,
-puis relancez train.py.
+
 """
 import numpy as np
 import cv2
