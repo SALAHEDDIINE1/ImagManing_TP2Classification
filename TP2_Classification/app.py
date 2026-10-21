@@ -141,8 +141,8 @@ with tab2:
             cm = np.array([[75, 5], [4, 14]])
         st.info("ℹ️ Affichage basé sur les métriques du modèle sélectionné.")
 
-   # Ajustement de la taille de la figure pour qu'elle soit plus compacte
-    fig, ax = plt.subplots(figsize=(5, 4))
+   # 7na sgharna figsize w zedna use_container_width=False
+    fig, ax = plt.subplots(figsize=(4, 3))
     
     annot_labels = np.array([
         [f"{cm[0,0]}\nVN", f"{cm[0,1]}\nFP"],
@@ -152,11 +152,15 @@ with tab2:
     sns.heatmap(cm, annot=annot_labels, fmt="", cmap="Blues", cbar=True,
                 xticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"],
                 yticklabels=[f"{CLASSES[0]} (0)", f"{CLASSES[1]} (1)"], 
-                ax=ax, annot_kws={"size": 10, "weight": "bold"}) # Taille de police réduite à 10 pour éviter l'effet écrasé
+                ax=ax, annot_kws={"size": 9, "weight": "bold"})
     
-    ax.set_xlabel("Classe prédite", fontsize=10)
-    ax.set_ylabel("Classe réelle", fontsize=10)
-    ax.set_title(f"Matrice de confusion - {cm_model_name}", fontsize=11, fontweight="bold")
+    ax.set_xlabel("Classe prédite", fontsize=9)
+    ax.set_ylabel("Classe réelle", fontsize=9)
+    ax.set_title(f"Matrice - {cm_model_name}", fontsize=10, fontweight="bold")
     
-    plt.tight_layout() # Permet d'ajuster proprement les marges et d'éviter les superpositions
-    st.pyplot(fig)
+    plt.tight_layout()
+    
+    # N-7tiwha f wast column sghira bach tban sghira w m9ada f screenshot
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.pyplot(fig, use_container_width=False)
