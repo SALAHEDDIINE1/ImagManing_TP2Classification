@@ -5,6 +5,7 @@ import joblib
 import streamlit as st
 from PIL import Image
 from features import extract_features, SIZE
+import os
 
 st.set_page_config(page_title="Voiture ou Bateau ?", page_icon="🖼️", layout="wide")
 
@@ -30,11 +31,22 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+
+
+
 @st.cache_resource
 def load_all():
-    metrics = json.load(open("TP2_Classification/models/metrics.json", encoding="utf-8"))
-    models = {name: joblib.load(f"models/{key}.joblib")
-              for key, name in metrics["names"].items()}
+    # Détermine le chemin vers le dossier où se trouve app.py
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    metrics_path = os.path.join(base_dir, "models", "metrics.json")
+    metrics = json.load(open(metrics_path, encoding="utf-8"))
+    
+    models = {}
+    for key, name in metrics["names"].items():
+        model_path = os.path.join(base_dir, "models", f"{key}.joblib")
+        models[name] = joblib.load(model_path)
+        
     return models, metrics
 
 
