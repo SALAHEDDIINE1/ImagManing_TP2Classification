@@ -120,25 +120,17 @@ with tab2:
     st.bar_chart(df.set_index("Modèle"))
 
     # --- Section Matrice de confusion ---
+   # --- Section Matrice de confusion ---
     st.markdown("---")
     st.markdown("### 📈 Matrice de confusion détaillée")
     
     cm_model_name = st.selectbox("Sélectionner un modèle pour afficher sa matrice de confusion", list(models.keys()), key="cm_select")
     
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    test_data_path = os.path.join(base_dir, "models", "test_data.joblib")
-    
-    if os.path.exists(test_data_path):
-        X_test, y_test = joblib.load(test_data_path)
-        y_pred = models[cm_model_name].predict(X_test)
-        cm = confusion_matrix(y_test, y_pred)
-    else:
-        if "SVM" in cm_model_name:
-            cm = np.array([[79, 1], [9, 9]])
-        else:
-            cm = np.array([[75, 5], [4, 14]])
+    # 1. On récupère la matrice directement depuis le fichier metrics.json chargé au début !
+    # 'res' contient déjà les résultats de metrics["results"]
+    matrix_list = res[cm_model_name]["confusion_matrix"]
+    cm = np.array(matrix_list) # On transforme la liste en array numpy pour seaborn
 
-    # La correction est ici : cette ligne est maintenant bien alignée avec le "if" et le "else" ci-dessus
     fig, ax = plt.subplots(figsize=(4, 3))
     
     annot_labels = np.array([
