@@ -138,7 +138,8 @@ with tab2:
         else:
             cm = np.array([[75, 5], [4, 14]])
 
-   fig, ax = plt.subplots(figsize=(4, 3))
+    # La correction est ici : cette ligne est maintenant bien alignée avec le "if" et le "else" ci-dessus
+    fig, ax = plt.subplots(figsize=(4, 3))
     
     annot_labels = np.array([
         [f"{cm[0,0]}\nVN", f"{cm[0,1]}\nFP"],
