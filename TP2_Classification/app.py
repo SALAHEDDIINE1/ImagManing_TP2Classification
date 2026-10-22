@@ -138,7 +138,7 @@ with tab2:
         else:
             cm = np.array([[75, 5], [4, 14]])
 
-      fig, ax = plt.subplots(figsize=(4, 3))
+   fig, ax = plt.subplots(figsize=(4, 3))
     
     annot_labels = np.array([
         [f"{cm[0,0]}\nVN", f"{cm[0,1]}\nFP"],
