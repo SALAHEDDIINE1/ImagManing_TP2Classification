@@ -137,7 +137,6 @@ with tab2:
             cm = np.array([[79, 1], [9, 9]])
         else:
             cm = np.array([[75, 5], [4, 14]])
-        
 
       fig, ax = plt.subplots(figsize=(4, 3))
     
