@@ -1,7 +1,5 @@
-"""Extraction de caractéristiques : mêmes descripteurs de TP1 ( + LBP.
-   Couleur RGB (6) + Histogramme HSV (32) + Texture GLCM (4) + Forme Hu (7) + LBP (10) = 59
 
-"""
+
 import numpy as np
 import cv2
 from skimage.feature import graycomatrix, graycoprops, local_binary_pattern
